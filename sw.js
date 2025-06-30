@@ -1,11 +1,13 @@
-const CACHE_NAME = 'pwa-install-demo-v3';
+const CACHE_NAME = 'pwa-custom-domain-v2';
 const urlsToCache = [
-  '/',
-  'index.html',
-  'index2.html',
-  'app.webmanifest',
-  'icon-192.png',
-  'icon-512.png'
+  './',
+  './index.html',
+  './app.html',
+  './app.webmanifest',
+  './styles.css',
+  './scripts.js',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Install service worker and cache assets
@@ -21,29 +23,38 @@ self.addEventListener('install', event => {
 
 // Serve cached content when offline
 self.addEventListener('fetch', event => {
-  // Handle navigation requests
+  const requestUrl = new URL(event.request.url);
+  
+  // Only handle requests from our own origin
+  if (requestUrl.origin !== location.origin) {
+    return;
+  }
+  
+  // For navigation requests, serve app.html when the app is installed
   if (event.request.mode === 'navigate') {
-    // For installed app, serve index2.html as the home page
     event.respondWith(
-      caches.match('index2.html').then(response => {
+      caches.match('./app.html').then(response => {
         return response || fetch(event.request);
       })
     );
     return;
   }
   
-  // For all other requests, use cache-first strategy
+  // For other requests, try cache first, then network
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached response if found
-        if (response) {
-          return response;
-        }
+    caches.match(event.request).then(response => {
+      if (response) return response;
+      
+      return fetch(event.request).then(response => {
+        if(!response || response.status !== 200) return response;
         
-        // Otherwise fetch from network
-        return fetch(event.request);
-      })
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME)
+          .then(cache => cache.put(event.request, responseToCache));
+          
+        return response;
+      });
+    })
   );
 });
 
@@ -55,7 +66,7 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
