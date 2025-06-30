@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a6cf7">
+    <title>Installed App Home</title>
+    <link rel="manifest" href="app.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1>Welcome to the Installed App</h1>
+        <p>This is the special home page for the installed version of our PWA. You're now enjoying the full native app experience!</p>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>Enhanced Performance</h3>
+                <p>Enjoy faster loading times and smoother interactions</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <h3>Native Experience</h3>
+                <p>App runs independently without browser UI</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🔔</div>
+                <h3>Push Notifications</h3>
+                <p>Receive important updates even when closed</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📶</div>
+                <h3>Offline Access</h3>
+                <p>Continue using core features without internet</p>
+            </div>
+        </div>
+        
+        <div class="app-badge">
+            App Installed Successfully
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Initialize for installed app
+        initPWA('installed');
+    </script>
+</body>
+</html>
