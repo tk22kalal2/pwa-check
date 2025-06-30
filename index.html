@@ -6,8 +6,9 @@
     <meta name="description" content="A complete PWA with install prompt">
     <meta name="theme-color" content="#4a6cf7">
     <title>Installable PWA</title>
-    <link rel="manifest" href="app.webmanifest">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="/app.webmanifest">
+    <link rel="stylesheet" href="/styles.css">
+    <base href="/">
 </head>
 <body>
     <div class="container">
@@ -83,7 +84,7 @@
         <button id="dismissBtn">Dismiss</button>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="/scripts.js"></script>
     <script>
         // Initialize for landing page
         initPWA('landing');
