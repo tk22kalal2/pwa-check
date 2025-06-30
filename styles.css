@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container, .app-container {
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    margin: 20px;
+}
+
+header {
+    background: #4a6cf7;
+    color: white;
+    padding: 30px 20px;
+    position: relative;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.content {
+    padding: 40px;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.feature {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    width: 220px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #4a6cf7;
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.install-btn {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(74, 108, 247, 0.4);
+}
+
+.install-btn:hover {
+    background: #3a5bd9;
+    transform: scale(1.05);
+}
+
+.install-btn:active {
+    transform: scale(0.98);
+}
+
+.instructions {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.instructions h2 {
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.step {
+    flex: 1;
+    min-width: 200px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.step-number {
+    background: #4a6cf7;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+footer {
+    background: #333;
+    color: white;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: slideUp 0.5s ease forwards;
+}
+
+.notification button {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.notification button:hover {
+    background: #3a5bd9;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        bottom: -50px;
+    }
+    to {
+        opacity: 1;
+        bottom: 20px;
+    }
+}
+
+/* App-specific styles */
+.app-container {
+    padding: 40px;
+}
+
+.app-container h1 {
+    color: #4a6cf7;
+}
+
+.app-container p {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.app-badge {
+    margin-top: 20px;
+    font-size: 1rem;
+    background: #4a6cf7;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    .container, .app-container {
+        border-radius: 15px;
+        padding: 15px;
+    }
+    
+    header {
+        padding: 20px 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .content {
+        padding: 20px 15px;
+    }
+    
+    .feature {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .steps {
+        flex-direction: column;
+    }
+    
+    .notification {
+        flex-direction: column;
+        width: 90%;
+        padding: 15px;
+    }
+}
