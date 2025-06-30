@@ -1,13 +1,15 @@
-const CACHE_NAME = 'pwa-custom-domain-v2';
+const CACHE_NAME = 'pwa-custom-domain-v4';
+const BASE_URL = self.location.origin;
+
 const urlsToCache = [
-  './',
-  './index.html',
-  './app.html',
-  './app.webmanifest',
-  './styles.css',
-  './scripts.js',
-  './icon-192.png',
-  './icon-512.png'
+  '/',
+  '/index.html',
+  '/app.html',
+  '/app.webmanifest',
+  '/styles.css',
+  '/scripts.js',
+  '/icon-192.png',
+  '/icon-512.png'
 ];
 
 // Install service worker and cache assets
@@ -16,7 +18,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        return cache.addAll(urlsToCache.map(url => new Request(url, {credentials: 'same-origin'})));
       })
   );
 });
@@ -25,36 +27,44 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
   
-  // Only handle requests from our own origin
-  if (requestUrl.origin !== location.origin) {
+  // Only handle same-origin requests
+  if (requestUrl.origin !== BASE_URL) {
     return;
   }
   
-  // For navigation requests, serve app.html when the app is installed
+  // For navigation requests, serve the appropriate page
   if (event.request.mode === 'navigate') {
-    event.respondWith(
-      caches.match('./app.html').then(response => {
-        return response || fetch(event.request);
-      })
-    );
+    // Check if this is the root request
+    if (requestUrl.pathname === '/') {
+      event.respondWith(
+        caches.match('/index.html')
+          .then(response => response || fetch(event.request))
+      );
+    } else {
+      event.respondWith(
+        caches.match(event.request)
+          .then(response => response || fetch(event.request))
+      );
+    }
     return;
   }
   
-  // For other requests, try cache first, then network
+  // For all other requests, use cache-first strategy
   event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) return response;
-      
-      return fetch(event.request).then(response => {
-        if(!response || response.status !== 200) return response;
+    caches.match(event.request)
+      .then(response => {
+        if (response) return response;
         
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME)
-          .then(cache => cache.put(event.request, responseToCache));
+        return fetch(event.request).then(response => {
+          if(!response || response.status !== 200) return response;
           
-        return response;
-      });
-    })
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => cache.put(event.request, responseToCache));
+            
+          return response;
+        });
+      })
   );
 });
 
